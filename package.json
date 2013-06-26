@@ -1,0 +1,27 @@
+{
+  "dependencies": {
+    "baudio": "~1.0.0",
+    "xbox-controller": "~0.1.0"
+  },
+  "name": "Tashijianstrument",
+  "description": "ERROR: No README.md file found!",
+  "version": "0.0.0",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/flyswatter/Tashjianstrument"
+  },
+  "keywords": [
+    "xbox",
+    "music"
+  ],
+  "author": "Dan Finlay",
+  "license": "BSD"
+}
