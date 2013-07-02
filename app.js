@@ -6,18 +6,23 @@ var currentPitch = root;
 var currentVolume = 0;
 var recording = false;
 
-// xbox.on('lefttrigger', function(position){
-// 	console.log("L trigger: "+JSON.stringify(position))
-// });
-// xbox.on('righttrigger', function(position){
-// 	console.log("R trigger: "+JSON.stringify(position))
-// });
-// xbox.on('left:move', function(position){
-// 	console.log("Left position: "+JSON.stringify(position))
-// });
-// xbox.on('right:move', function(position){
-// 	console.log("Right Position: "+JSON.stringify(position))
-// });
+//input values:
+var x=y=z=w=0;
+
+
+
+xbox.on('lefttrigger', function(position){
+	console.log("L trigger: "+JSON.stringify(position))
+});
+xbox.on('righttrigger', function(position){
+	console.log("R trigger: "+JSON.stringify(position))
+});
+xbox.on('left:move', function(position){
+	console.log("Left position: "+JSON.stringify(position))
+});
+xbox.on('right:move', function(position){
+	console.log("Right Position: "+JSON.stringify(position))
+});
 
 var components = [
 	function(t){
