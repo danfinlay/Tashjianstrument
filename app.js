@@ -1,57 +1,78 @@
 var baudio = require('baudio');
-// var xbox = require('xbox-controller');
+var XboxController = require('node-xbox-controller');
+var xbox = new XboxController;
+var domain = require('domain')
 
 var root = 300;
 var currentPitch = root;
 var currentVolume = 0;
 var recording = false;
 
+
 //input values:
 var x=y=z=w=0;
+var PI = Math.PI
 
+var maxInputValue = 33000;
+var maxOutputFrequency = 10000;
 
+function mapInputToFrequency(input){
+	// console.log("in: "+input+" out: "+maxOutputFrequency / maxInputValue * input)
+	return maxOutputFrequency / maxInputValue * input
+}
+function soundForFrequencyAtTime(f, t){
+	var l = Math.sin(2*PI*f*t/1000)
+	// console.log("Requested level: "+l)
+	return l
+}
 
-xbox.on('lefttrigger', function(position){
-	console.log("L trigger: "+JSON.stringify(position))
-});
-xbox.on('righttrigger', function(position){
-	console.log("R trigger: "+JSON.stringify(position))
-});
-xbox.on('left:move', function(position){
-	console.log("Left position: "+JSON.stringify(position))
-});
-xbox.on('right:move', function(position){
-	console.log("Right Position: "+JSON.stringify(position))
-});
+// xbox.on('lefttrigger', function(position){
+// 	console.log("L trigger: "+JSON.stringify(position))
+// });
+// xbox.on('righttrigger', function(position){
+// 	console.log("R trigger: "+JSON.stringify(position))
+// });
+// xbox.on('left:move', function(position){
+// 	console.log("Left position: "+JSON.stringify(position))
+// });
+
 
 var components = [
 	function(t){
-		return Math.sin( t * currentPitch ) * Math.sin( t * 2 );
+		soundForFrequencyAtTime(x, t);
 	},
-	function(t){
-		return Math.cos( t * currentPitch ) * Math.sin( t * 2 );
-	},
-	function(t){
-		return Math.sin( t * currentPitch * 3 );
-	},	
-	function(t){
-		return Math.sin( t * currentPitch * 3 ) * Math.sin( t * 5 );
-	},
+	// function(t){
+	// 	soundForFrequencyAtTime(y, t);
+	// }
+	// function(t){
+	// 	return Math.sin(100*PI*t)
+	// }
 ]
+
 
 function componentSum(t){
 	var result = 0;
+
 	components.forEach(function(component){
 		result+=component(t);
 	})
-    return result;
+    return result/(components.length)*0.8;
 }
 
 var b = baudio(function (t) {
+
+	xbox.on('right:move', function(position){
+		x = mapInputToFrequency(position.x)
+		y = mapInputToFrequency(position.y)
+	});
+
     return componentSum(t);
 });
 
 b.play();
+
+
+
 // xbox.on('start:press', function(key){
 // 	if(recording){
 // 		b.record('./result')
