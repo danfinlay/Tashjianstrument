@@ -1,4 +1,4 @@
-A work in progress, largely waiting until I get my hands on the xbox wireless receiver.
+A work in progress, put on pause for now, as Baudio is not performant using evented variable modifiers, as it might be if someone ported it to use streams2...
 
 Aiming to be a type of instrument using the xbox controller.
 
